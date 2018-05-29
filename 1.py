@@ -161,9 +161,28 @@ v_data1_sum.update(v_data1_7)
 #v_data1_sum.update(v_data1_9)
 v_data1_sum.update(v_data1_10)
 
+xArray = []             # 存放速度的值
+yArray = []             # 存放对应值速度的个数
 
+for x in v_data1_sum:
+    xArray.append(x)
+    yArray.append(v_data1_sum[x])
 
+yArray_sum = sum(yArray)
 
+for i in range(0, len(yArray)):
+    yArray[i] = float(yArray[i])/float(yArray_sum)
+    #yArray = '%.2f' % (float(yArray[i])/yArray_sum)
+
+plt.xlim(-6, 20)
+plt.ylim(0, 0.025)
+# plt.xticks(-5, 18, 1)
+# plt.yticks(0, 0.024, 0.005)
+plt.bar(xArray, yArray, width = 0.1 ,facecolor='#9999ff', edgecolor='white')
+plt.xlabel("速度")
+plt.ylabel("比例")
+plt.title("次靠前速度分布图")
+plt.show()
 # for i in range(1, len(nodeTempArray)-1):# 计算每一帧的均值和方差并且显示出来
 #     node = np.array(nodeTempArray[i])
 #     mean_value = node.mean()
