@@ -93,7 +93,7 @@ v_temp_mid_all = [[]]
 v_temp_end_all = [[]]
 
 # k表示当前的帧数
-k_all = k_now[-1] - k_now[0]                # 总帧数
+k_all = k_now[-1] - k_now[0]                  # 总帧数
 for k in range(1, k_all):                     # 最后一帧的帧数为k_now[-1],第一帧k_now[0]
     v_temp_beg = []  # 临时数组，每次存放当前帧所有前段点的集合
     v_temp_mid = []
@@ -113,7 +113,6 @@ for k in range(1, k_all):                     # 最后一帧的帧数为k_now[-1
 
 
 # 画图，画出每一帧的前段、中段、后段速度分布图
-
 
 
 # 遍历每一帧
@@ -151,9 +150,7 @@ for i in range(1, k_all):
     plt.ylabel("占比")
     #plt.show()
     #print(title_beg_str + "均值为：", v_avg_beg)
-    print(title_beg_str + "方差为: ", v_var_beg)
-
-
+    #print(title_beg_str + "方差为: ", v_var_beg)
 
 
     # 画中段点的函数
@@ -177,10 +174,7 @@ for i in range(1, k_all):
     plt.ylabel("占比")
     #plt.show()
     #print(title_mid_str + "均值为：", v_avg_mid)
-    print(title_mid_str + "方差为: ", v_var_mid)
-
-
-
+    #print(title_mid_str + "方差为: ", v_var_mid)
 
     # 画后段点的函数
     for v_x_end in v_col_end:
@@ -201,15 +195,80 @@ for i in range(1, k_all):
              fontsize=12,verticalalignment='center', horizontalalignment='center')
     plt.xlabel("速度")
     plt.ylabel("占比")
-    plt.show()
+
+    fig_name = str(str(k_now[i]) + '.jpg')
+    fig_save = str('/Users/arcstone_mems_108/Desktop/result/cell_fig/' + fig_name)
+    plt.savefig(fig_save, format = 'png', dpi = 300)
     #print(title_end_str + "均值为：", v_avg_end)
-    print(title_end_str + "方差为: ", v_var_end)
+    #print(title_end_str + "方差为: ", v_var_end)
+
+    #plt.show()
+    
+
+
+
+# 画图，横轴为时间，纵轴为方差
+v_var_k_all_beg = []        # 存放每一帧的方差
+v_avg_k_all_beg = []        # 存放每一帧的平均速度
+v_var_k_all_mid = []        # 存放每一帧的方差
+v_avg_k_all_mid = []        # 存放每一帧的平均速度
+v_var_k_all_end = []        # 存放每一帧的方差
+v_avg_k_all_end = []        # 存放每一帧的平均速度
+k_now_i = []
+for i in range(1, k_all):
+    k_now_i.append(k_now[0] + i)
+    v_temp_beg_now = np.array(v_temp_beg_all[i])
+    v_temp_mid_now = np.array(v_temp_mid_all[i])
+    v_temp_end_now = np.array(v_temp_end_all[i])
+    v_var_k_all_beg.append(v_temp_beg_now.var())
+    v_avg_k_all_beg.append(v_temp_beg_now.sum()/len(v_temp_beg_all[i]))
+    v_var_k_all_mid.append(v_temp_mid_now.var())
+    v_avg_k_all_mid.append(v_temp_mid_now.sum()/len(v_temp_mid_all[i]))
+    v_var_k_all_end.append(v_temp_end_now.var())
+    v_avg_k_all_end.append(v_temp_end_now.sum()/len(v_temp_end_all[i]))
+
+
+
+
+plt.subplot(1,2,1)
+plt.xlabel("时间")
+plt.ylabel("方差")
+plt.plot(k_now_i, v_var_k_all_beg, label='前段', color = 'b', marker='+')
+plt.plot(k_now_i, v_var_k_all_mid, label='中段', color = 'g', marker='>')
+plt.plot(k_now_i, v_var_k_all_end, label='后段', color = 'r', marker='o')
+
+
+
+plt.subplot(1,2,2)
+plt.xlabel("时间")
+plt.ylabel("平均速度")
+plt.plot(k_now_i, v_avg_k_all_beg, label='前段', color = 'b', marker='+')
+plt.plot(k_now_i, v_avg_k_all_mid, label='中段', color = 'g', marker='>')
+plt.plot(k_now_i, v_avg_k_all_end, label='后段', color = 'r', marker='o')
+
+
+
+plt.show()
 
 
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+# 画图，横轴为时间，纵轴为平均速度
 
 
 
