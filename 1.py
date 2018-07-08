@@ -9,25 +9,27 @@ plt.rcParams['font.sans-serif']=['SimHei'] #用来正常显示中文标签
 plt.rcParams['axes.unicode_minus']=False #用来正常显示负号
 
 #==========================================【数据读入模块】=========================================
-data1_1 = open('/Users/arcstone_mems_108/Desktop/keyan/githubproject/fig_cell/datatxt/data1_1.txt')
+data_7_5 = open('/Users/arcstone_mems_108/Desktop/keyan/githubproject/fig_cell/data7_5_2.txt')
+
+data1_1 = open('/Users/arcstone_mems_108/Desktop/keyan/githubproject/fig_cell/datatxt/data4_1.txt')
 datatxt1_1 = data1_1.readlines()
-data1_2 = open('/Users/arcstone_mems_108/Desktop/keyan/githubproject/fig_cell/datatxt/data1_2.txt')
+data1_2 = open('/Users/arcstone_mems_108/Desktop/keyan/githubproject/fig_cell/datatxt/data4_2.txt')
 datatxt1_2 = data1_2.readlines()
-data1_3 = open('/Users/arcstone_mems_108/Desktop/keyan/githubproject/fig_cell/datatxt/data1_3.txt')
+data1_3 = open('/Users/arcstone_mems_108/Desktop/keyan/githubproject/fig_cell/datatxt/data4_3.txt')
 datatxt1_3 = data1_3.readlines()
-data1_4 = open('/Users/arcstone_mems_108/Desktop/keyan/githubproject/fig_cell/datatxt/data1_4.txt')
+data1_4 = open('/Users/arcstone_mems_108/Desktop/keyan/githubproject/fig_cell/datatxt/data4_4.txt')
 datatxt1_4 = data1_4.readlines()
-data1_5 = open('/Users/arcstone_mems_108/Desktop/keyan/githubproject/fig_cell/datatxt/data1_5.txt')
+data1_5 = open('/Users/arcstone_mems_108/Desktop/keyan/githubproject/fig_cell/datatxt/data4_5.txt')
 datatxt1_5 = data1_5.readlines()
-data1_6 = open('/Users/arcstone_mems_108/Desktop/keyan/githubproject/fig_cell/datatxt/data1_6.txt')
+data1_6 = open('/Users/arcstone_mems_108/Desktop/keyan/githubproject/fig_cell/datatxt/data4_6.txt')
 datatxt1_6 = data1_6.readlines()
-data1_7 = open('/Users/arcstone_mems_108/Desktop/keyan/githubproject/fig_cell/datatxt/data1_7.txt')
+data1_7 = open('/Users/arcstone_mems_108/Desktop/keyan/githubproject/fig_cell/datatxt/data4_7.txt')
 datatxt1_7 = data1_7.readlines()
-# data1_8 = open('/Users/arcstone_mems_108/Desktop/keyan/githubproject/fig_cell/datatxt/data2_8.txt')
-# datatxt1_8 = data1_8.readlines()
-# data1_9 = open('/Users/arcstone_mems_108/Desktop/keyan/githubproject/fig_cell/datatxt/data2_9.txt')
+data1_8 = open('/Users/arcstone_mems_108/Desktop/keyan/githubproject/fig_cell/datatxt/data4_8.txt')
+datatxt1_8 = data1_8.readlines()
+# data1_9 = open('/Users/arcstone_mems_108/Desktop/keyan/githubproject/fig_cell/datatxt/data4_9.txt')
 # datatxt1_9 = data1_9.readlines()
-data1_10 = open('/Users/arcstone_mems_108/Desktop/keyan/githubproject/fig_cell/datatxt/data1_10.txt')
+data1_10 = open('/Users/arcstone_mems_108/Desktop/keyan/githubproject/fig_cell/datatxt/data4_10.txt')
 datatxt1_10 = data1_10.readlines()
 #========================================【定义变量】======================================================
 p1 = r"本次显示的特征点为\d*个"
@@ -36,6 +38,14 @@ p2 = r".*速度为\d*"
 pattern2 = re.compile(p2)
 p3 = r"当前为第\d*帧"
 pattern3 = re.compile(p3)
+p4 = r"第\d*帧前段点的运动速度为.*"
+pattern4 = re.compile(p4)
+p5 = r"第\d*帧中段点的运动速度为.*"
+pattern5 = re.compile(p5)
+p6 = r"第\d*帧后段点的运动速度为.*"
+pattern6 = re.compile(p6)
+
+
 nodeTempArray = [[]]  # 二维数组用来存放每次的特征点的个数
 frameList = []  # 存放当前的帧数，和i对应
 node_list = []
@@ -44,6 +54,20 @@ variance_list = []
 #node = np.array()
 
 #========================================【进行正则匹配】======================================================
+# 07_05数据匹配
+def v_rematch_1(datatxt):
+    i = -1
+    for line in datatxt:
+        print(line)
+        matcher1_0705 = re.match(pattern4, line)
+        matcher2_0705 = re.match(pattern5, line)
+        matcher3_0705 = re.match(pattern6, line)
+
+        if matcher1_0705:
+            print(matcher1_0705.group())
+
+
+
 def v_rematch(datatxt):
     i = -1
     for line in datatxt:
@@ -134,11 +158,11 @@ for i in range(1, len(nodeTempArray)-1):
     # i代表一小组数据
     v_data1_7.update(nodeTempArray[i])
 nodeTempArray.clear()
-# v_rematch(datatxt1_8)
-# for i in range(1, len(nodeTempArray)-1):
-#     # i代表一小组数据
-#     v_data1_8.update(nodeTempArray[i])
-# nodeTempArray.clear()
+v_rematch(datatxt1_8)
+for i in range(1, len(nodeTempArray)-1):
+    # i代表一小组数据
+    v_data1_8.update(nodeTempArray[i])
+nodeTempArray.clear()
 # v_rematch(datatxt1_9)
 # for i in range(1, len(nodeTempArray)-1):
 #     # i代表一小组数据
@@ -157,7 +181,7 @@ v_data1_sum.update(v_data1_4)
 v_data1_sum.update(v_data1_5)
 v_data1_sum.update(v_data1_6)
 v_data1_sum.update(v_data1_7)
-#v_data1_sum.update(v_data1_8)
+v_data1_sum.update(v_data1_8)
 #v_data1_sum.update(v_data1_9)
 v_data1_sum.update(v_data1_10)
 
@@ -173,6 +197,14 @@ yArray_sum = sum(yArray)
 for i in range(0, len(yArray)):
     yArray[i] = float(yArray[i])/float(yArray_sum)
     #yArray = '%.2f' % (float(yArray[i])/yArray_sum)
+# 速度的均值
+v1_mean = sum(v_data1_sum)/len(v_data1_sum)
+
+# 速度的方差
+#v1_data1_sum = np.array(v_data1_sum)
+
+#v1_variance = v1_data1_sum.var()
+
 
 #plt.xlim(-6, 20)
 #plt.ylim(0, 0.025)
@@ -182,6 +214,8 @@ plt.bar(xArray, yArray, width = 0.1 ,facecolor='#9999ff', edgecolor='white')
 plt.xlabel("速度")
 plt.ylabel("比例")
 plt.title("次靠前速度分布图")
+plt.text(15, 0.02,"均值：%f"%v1_mean, fontsize = 12, verticalalignment = 'center', horizontalalignment = 'center')
+#plt.text(15, 0.017, "方差：%f"%v1_variance, fontsize = 12, verticalalignment = 'center', horizontalalignment = 'center')
 plt.show()
 # for i in range(1, len(nodeTempArray)-1):# 计算每一帧的均值和方差并且显示出来
 #     node = np.array(nodeTempArray[i])
