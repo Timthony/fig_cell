@@ -133,6 +133,7 @@ for i in range(1, k_all):
     for v_x_beg in v_col_beg:
         x_arr_beg.append(v_x_beg)
         y_arr_beg.append(v_col_beg[v_x_beg])
+
         y_arr_beg_scale.append(v_col_beg[v_x_beg]/len(v_temp_beg_all[i]))
     plt.subplot(1,3,1)
     plt.bar(x_arr_beg, y_arr_beg_scale,  width = 0.06, facecolor='#9999ff',edgecolor='white')
