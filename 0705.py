@@ -12,7 +12,7 @@ plt.rcParams['axes.unicode_minus']=False #用来正常显示负号
 
 
 #==========================================【数据读入模块】=========================================
-data_7_5 = open('/Users/arcstone_mems_108/Desktop/keyan/githubproject/fig_cell/data7_5_2.txt')
+data_7_5 = open('/Users/arcstone_mems_108/Desktop/keyan/githubproject/fig_cell/data4_6.txt')
 
 
 #========================================【定义变量】======================================================
@@ -215,12 +215,23 @@ v_var_k_all_mid = []        # 存放每一帧的方差
 v_avg_k_all_mid = []        # 存放每一帧的平均速度
 v_var_k_all_end = []        # 存放每一帧的方差
 v_avg_k_all_end = []        # 存放每一帧的平均速度
+v_var_k_all = []            # 存放每一帧整体的方差
+v_avg_k_all = []            # 存放每一帧整体的速度
+
+
 k_now_i = []
 for i in range(1, k_all):
     k_now_i.append(k_now[0] + i)
     v_temp_beg_now = np.array(v_temp_beg_all[i])
     v_temp_mid_now = np.array(v_temp_mid_all[i])
     v_temp_end_now = np.array(v_temp_end_all[i])
+    v_temp_all_now = []
+    v_temp_all_now.append(v_temp_beg_now)
+    v_temp_all_now.append(v_temp_mid_now)
+    v_temp_all_now.append(v_temp_end_now)
+    v_temp_all_now = np.array(v_temp_all_now)
+    v_var_k_all.append(v_temp_all_now.var())
+    v_avg_k_all.append(v_temp_all_now.sum()/len(v_temp_all_now))
     v_var_k_all_beg.append(v_temp_beg_now.var())
     v_avg_k_all_beg.append(v_temp_beg_now.sum()/len(v_temp_beg_all[i]))
     v_var_k_all_mid.append(v_temp_mid_now.var())
@@ -230,23 +241,38 @@ for i in range(1, k_all):
 
 
 
-
-plt.subplot(1,2,1)
-plt.xlabel("时间")
-plt.ylabel("方差")
+# 分三段画方差
+plt.subplot(2,2,1)
+plt.xlabel("时间", fontsize = '14')
+plt.ylabel("方差", fontsize = '14')
 plt.plot(k_now_i, v_var_k_all_beg, label='前段', color = 'b', marker='+')
 plt.plot(k_now_i, v_var_k_all_mid, label='中段', color = 'g', marker='>')
 plt.plot(k_now_i, v_var_k_all_end, label='后段', color = 'r', marker='o')
-
-
-
-plt.subplot(1,2,2)
-plt.xlabel("时间")
-plt.ylabel("平均速度")
+plt.title("4-6抽核过程中各段方差随着帧数增加变化图", fontsize='16')                   # 每次更改的参数
+plt.legend()
+# 分三段画平均速度
+plt.subplot(2,2,2)
+plt.xlabel("时间", fontsize = '14')
+plt.ylabel("平均速度", fontsize = '14')
 plt.plot(k_now_i, v_avg_k_all_beg, label='前段', color = 'b', marker='+')
 plt.plot(k_now_i, v_avg_k_all_mid, label='中段', color = 'g', marker='>')
 plt.plot(k_now_i, v_avg_k_all_end, label='后段', color = 'r', marker='o')
+plt.title("4-6抽核过程中各段平均速度随着帧数增加变化图", fontsize = '16')              # 每次更改的参数
+plt.legend()
+# 画整段速度的方差,  整段速度的
+plt.subplot(2, 2, 3)
+plt.xlabel("时间", fontsize = '14')
+plt.ylabel("方差", fontsize = '14')
+plt.plot(k_now_i, v_var_k_all)
+plt.title("4-6抽核过程中方差随着帧数增加变化图", fontsize = '16')
 
+
+# 画整段的平均速度
+plt.subplot(2, 2, 4)
+plt.xlabel("时间", fontsize = '14')
+plt.ylabel("平均速度", fontsize = '14')
+plt.plot(k_now_i, v_avg_k_all)
+plt.title("4-6抽核过程中平均速度随着帧数增加变化图", fontsize = '16')
 
 
 plt.show()
