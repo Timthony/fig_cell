@@ -210,45 +210,53 @@ for i in range(1, k_all):
 
 # 画图，横轴为时间，纵轴为方差
 v_var_k_all_beg = []        # 存放每一帧的方差
+v_cv_k_all_beg = []         # 存放每一帧的变异系数
 v_avg_k_all_beg = []        # 存放每一帧的平均速度
 v_var_k_all_mid = []        # 存放每一帧的方差
+v_cv_k_all_mid = []         # 存放每一帧的变异系数
 v_avg_k_all_mid = []        # 存放每一帧的平均速度
 v_var_k_all_end = []        # 存放每一帧的方差
+v_cv_k_all_end = []         # 存放每一帧的变异系数
 v_avg_k_all_end = []        # 存放每一帧的平均速度
 v_var_k_all = []            # 存放每一帧整体的方差
 v_avg_k_all = []            # 存放每一帧整体的速度
+v_cv_k_all = []             # 存放每一段整体的变异系数
+
 
 
 k_now_i = []
-for i in range(1, k_all):
+for i in range(1, 45):
     k_now_i.append(k_now[0] + i)
     v_temp_beg_now = np.array(v_temp_beg_all[i])
     v_temp_mid_now = np.array(v_temp_mid_all[i])
     v_temp_end_now = np.array(v_temp_end_all[i])
-    v_temp_all_now = []
-    v_temp_all_now.append(v_temp_beg_now)
-    v_temp_all_now.append(v_temp_mid_now)
-    v_temp_all_now.append(v_temp_end_now)
-    v_temp_all_now = np.array(v_temp_all_now)
-    v_var_k_all.append(v_temp_all_now.var())
-    v_avg_k_all.append(v_temp_all_now.sum()/len(v_temp_all_now))
+
+    v_temp_all_now = v_temp_beg_all[i] + v_temp_mid_all[i] + v_temp_end_all[i]
+
+    v_temp_all_now_arr = np.array(v_temp_all_now)
+    v_var_k_all.append(v_temp_all_now_arr.var())
+    v_cv_k_all.append(v_temp_all_now_arr.std()/(v_temp_all_now_arr.sum()/len(v_temp_all_now)))
+    v_avg_k_all.append(v_temp_all_now_arr.sum()/len(v_temp_all_now))
     v_var_k_all_beg.append(v_temp_beg_now.var())
+    v_cv_k_all_beg.append(v_temp_beg_now.std()/(v_temp_beg_now.sum()/len(v_temp_beg_all[i])))
     v_avg_k_all_beg.append(v_temp_beg_now.sum()/len(v_temp_beg_all[i]))
     v_var_k_all_mid.append(v_temp_mid_now.var())
+    v_cv_k_all_mid.append(v_temp_mid_now.std()/(v_temp_mid_now.sum()/len(v_temp_mid_all[i])))
     v_avg_k_all_mid.append(v_temp_mid_now.sum()/len(v_temp_mid_all[i]))
     v_var_k_all_end.append(v_temp_end_now.var())
+    v_cv_k_all_end.append(v_temp_end_now.std()/v_temp_end_now.sum()/len(v_temp_end_all[i]))
     v_avg_k_all_end.append(v_temp_end_now.sum()/len(v_temp_end_all[i]))
-
+    v_temp_all_now.clear()
 
 
 # 分三段画方差
 plt.subplot(2,2,1)
 plt.xlabel("时间", fontsize = '14')
-plt.ylabel("方差", fontsize = '14')
-plt.plot(k_now_i, v_var_k_all_beg, label='前段', color = 'b', marker='+')
-plt.plot(k_now_i, v_var_k_all_mid, label='中段', color = 'g', marker='>')
-plt.plot(k_now_i, v_var_k_all_end, label='后段', color = 'r', marker='o')
-plt.title("4-6抽核过程中各段方差随着帧数增加变化图", fontsize='16')                   # 每次更改的参数
+plt.ylabel("变异系数", fontsize = '14')
+plt.plot(k_now_i, v_cv_k_all_beg, label='前段', color = 'b', marker='+')
+plt.plot(k_now_i, v_cv_k_all_mid, label='中段', color = 'g', marker='>')
+plt.plot(k_now_i, v_cv_k_all_end, label='后段', color = 'r', marker='o')
+plt.title("4-6抽核过程中各段变异系数随着帧数增加变化图", fontsize='16')                   # 每次更改的参数
 plt.legend()
 # 分三段画平均速度
 plt.subplot(2,2,2)
@@ -262,9 +270,9 @@ plt.legend()
 # 画整段速度的方差,  整段速度的
 plt.subplot(2, 2, 3)
 plt.xlabel("时间", fontsize = '14')
-plt.ylabel("方差", fontsize = '14')
-plt.plot(k_now_i, v_var_k_all)
-plt.title("4-6抽核过程中方差随着帧数增加变化图", fontsize = '16')
+plt.ylabel("变异系数", fontsize = '14')
+plt.plot(k_now_i, v_cv_k_all)
+plt.title("4-6抽核过程中变异系数随着帧数增加变化图", fontsize = '16')
 
 
 # 画整段的平均速度
