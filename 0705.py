@@ -12,7 +12,7 @@ plt.rcParams['axes.unicode_minus']=False #用来正常显示负号
 
 
 #==========================================【数据读入模块】=========================================
-data_7_5 = open('/Users/arcstone_mems_108/Desktop/keyan/githubproject/fig_cell/data4_6.txt')
+data_7_5 = open('/Users/arcstone_mems_108/Desktop/自动抽核40组数据/data4_7好.txt')
 
 
 #========================================【定义变量】======================================================
@@ -225,7 +225,7 @@ v_cv_k_all = []             # 存放每一段整体的变异系数
 
 
 k_now_i = []
-for i in range(1, 45):
+for i in range(1, k_all):
     k_now_i.append(k_now[0] + i)
     v_temp_beg_now = np.array(v_temp_beg_all[i])
     v_temp_mid_now = np.array(v_temp_mid_all[i])
@@ -256,7 +256,7 @@ plt.ylabel("变异系数", fontsize = '14')
 plt.plot(k_now_i, v_cv_k_all_beg, label='前段', color = 'b', marker='+')
 plt.plot(k_now_i, v_cv_k_all_mid, label='中段', color = 'g', marker='>')
 plt.plot(k_now_i, v_cv_k_all_end, label='后段', color = 'r', marker='o')
-plt.title("4-6抽核过程中各段变异系数随着帧数增加变化图", fontsize='16')                   # 每次更改的参数
+plt.title("4-7抽核过程中各段变异系数随着帧数增加变化图", fontsize='16')                   # 每次更改的参数
 plt.legend()
 # 分三段画平均速度
 plt.subplot(2,2,2)
@@ -265,14 +265,14 @@ plt.ylabel("平均速度", fontsize = '14')
 plt.plot(k_now_i, v_avg_k_all_beg, label='前段', color = 'b', marker='+')
 plt.plot(k_now_i, v_avg_k_all_mid, label='中段', color = 'g', marker='>')
 plt.plot(k_now_i, v_avg_k_all_end, label='后段', color = 'r', marker='o')
-plt.title("4-6抽核过程中各段平均速度随着帧数增加变化图", fontsize = '16')              # 每次更改的参数
+plt.title("4-7抽核过程中各段平均速度随着帧数增加变化图", fontsize = '16')              # 每次更改的参数
 plt.legend()
 # 画整段速度的方差,  整段速度的
 plt.subplot(2, 2, 3)
 plt.xlabel("时间", fontsize = '14')
 plt.ylabel("变异系数", fontsize = '14')
 plt.plot(k_now_i, v_cv_k_all)
-plt.title("4-6抽核过程中变异系数随着帧数增加变化图", fontsize = '16')
+plt.title("4-7抽核过程中变异系数随着帧数增加变化图", fontsize = '16')
 
 
 # 画整段的平均速度
@@ -280,7 +280,7 @@ plt.subplot(2, 2, 4)
 plt.xlabel("时间", fontsize = '14')
 plt.ylabel("平均速度", fontsize = '14')
 plt.plot(k_now_i, v_avg_k_all)
-plt.title("4-6抽核过程中平均速度随着帧数增加变化图", fontsize = '16')
+plt.title("4-7抽核过程中平均速度随着帧数增加变化图", fontsize = '16')
 
 
 plt.show()
